@@ -8,10 +8,10 @@
 </head>
 
 <body>
-<iframe name="back" style="display:none;"></iframe>
+
 	<div id="main">
     	<div id="top">
-        	<a href="?">
+        	<a href="index.php">
             	<img src="./icon/0416.jpg">
             </a>
                             <img src="./icon/0417.jpg">
