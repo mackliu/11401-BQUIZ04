@@ -39,7 +39,7 @@ function login(){
         if(parseInt(res)==1){
             alert("驗證成功");
         }else{
-            alert("驗證失敗");
+            alert("對不起，你輸入的驗證碼有誤，請重新登入");
         }
     })
 }    
