@@ -37,7 +37,11 @@ function login(){
     let chk=$("#chk").val();
     $.get("./api/chkAns.php",{chk},(res)=>{
         if(parseInt(res)==1){
-            alert("驗證成功");
+            $.get("./api/chkPw.php",{acc:$("#acc").val(),pw:$("#pw").val()},()=>{
+                location.href="?"
+            })
+
+
         }else{
             alert("對不起，你輸入的驗證碼有誤，請重新登入");
         }
