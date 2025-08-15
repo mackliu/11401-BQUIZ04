@@ -6,9 +6,21 @@
         <td>密碼</td>
         <td>管理</td>
     </tr>
+    <?php 
+    $admins=$Admin->all();
+    foreach($admins as $admin):
+    ?>
     <tr class="pp ct">
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?=$admin['acc'];?></td>
+        <td><?=str_repeat("*",mb_strlen($admin['pw']));?></td>
+        <td>
+           <?php if($admin['acc']!='admin'):?>
+            <button data-id="<?=$admin['id'];?>">修改</button>
+            <button data-id="<?=$admin['id'];?>">刪除</button>
+            <?php else: ?>
+                此帳號為最高權限
+            <?php endif; ?>
+        </td>
     </tr>
+    <?php endforeach; ?>
  </table>
