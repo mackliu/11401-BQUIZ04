@@ -1,4 +1,6 @@
 <?php include_once "db.php";
 
-$_POST['regdate']=date("Y-m-d");
+if(!isset($_POST['id'])){
+    $_POST['regdate']=date("Y-m-d");
+}
 $User->save($_POST);
