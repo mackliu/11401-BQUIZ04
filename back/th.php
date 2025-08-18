@@ -32,12 +32,20 @@
  </table>
 
  <script>
+getBigs();    
 function addBig(){
     let name=$("#big").val();
     $.post("./api/save_type.php",{name,big_id:0},()=>{
-        
+        $("#big").val("");
+        getBigs();
     })
 }    
+
+function getBigs(){
+    $.get("./api/get_bigs.php",(options)=>{
+        $("#selBig").html(options);
+    })
+}
  </script>
 
 <h2 class="ct">商品管理</h2>
