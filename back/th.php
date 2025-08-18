@@ -15,20 +15,35 @@
 
 <!-- table.all>(tr.tt>td+td.ct>button*2) -->
  <table class="all">
+    <?php 
+    $bigs=$Type->all(['big_id'=>0]);
+    foreach($bigs as $big):
+    ?>
     <tr class="tt">
-        <td>fafdsaf</td>
+        <td><?=$big['name'];?></td>
         <td class="ct">
-            <button>修改</button>
-            <button>刪除</button>
+            <button class="edit-btn" data-id="<?=$big['id'];?>">修改</button>
+            <button class='del-btn' data-id="<?=$big['id'];?>">刪除</button>
         </td>
     </tr>
+    <?php 
+    if($Type->count(['big_id'=>$big['id']])>0):
+        $mids=$Type->all(['big_id'=>$big['id']]);
+        foreach($mids as $mid):
+    ?>
     <tr class="pp ct">
-        <td>12312</td>
+        <td><?=$mid['name'];?></td>
         <td>
-            <button>修改</button>
-            <button>刪除</button>
+            <button class="edit-btn" data-id="<?=$mid['id'];?>">修改</button>
+            <button class="del-btn" data-id="<?=$mid['id'];?>">刪除</button>
         </td>
     </tr>
+    <?php
+    endforeach;
+    endif;
+    endforeach;
+
+    ?>
  </table>
 
  <script>
@@ -54,6 +69,17 @@ function getBigs(){
         $("#selBig").html(options);
     })
 }
+
+$(".del-btn").on("click",function(){
+    let id=$(this).data("id");
+    if(confirm(`確定要刪除這筆分類資料嗎?`)){
+        $.post("./api/del.php",{id,table:'Type'},()=>{
+            location.reload();
+        })
+    }
+})
+
+
  </script>
 
 <h2 class="ct">商品管理</h2>
