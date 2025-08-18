@@ -106,16 +106,63 @@ $(".edit-btn").on("click",function(){
         <td>狀態</td>
         <td>操作</td>
     </tr>
+    <?php
+    $items=$Item->all();
+    foreach($items as $item):
+    ?>
     <tr class="pp ct">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?=$item['no'];?></td>
+        <td><?=$item['name'];?></td>
+        <td><?=$item['stock'];?></td>
         <td>
-            <button>修改</button>
-            <button>刪除</button>
-            <button>上架</button>
-            <button>下架</button>
+            <?php
+                echo ($item['sh'] == 1) ? "販售中" : "已下架";
+            ?>
+        </td>
+        <td>
+            <button data-id="<?=$item['id'];?>" class='edit-btn'>修改</button>
+            <button data-id="<?=$item['id'];?>" class='del-btn'>刪除</button>
+            <button data-id="<?=$item['id'];?>" class='up-btn'>上架</button>
+            <button data-id="<?=$item['id'];?>" class='down-btn'>下架</button>
         </td>
     </tr>
+    <?php
+    endforeach;
+    ?>
  </table>
+
+ <script>
+    $(".del-btn").on("click",function(){
+    let id=$(this).data("id");
+    if(confirm(`確定要刪除這筆商品資料嗎?`)){
+        $.post("./api/del.php",{id,table:'Item'},()=>{
+            location.reload();
+        })
+    }
+})
+
+$(".up-btn,.down-btn").on("click",function(){
+    let id=$(this).data("id");
+    let sh=1;
+    let action=$(this).text();
+    switch(action){
+        case "上架":
+            sh=1;
+            break;
+        case "下架":
+            sh=0;
+        break;
+
+    }
+    $.post("./api/sw.php",{id,sh},()=>{
+        //location.reload();
+       $(this).parent().prev().text(sh == 1 ? "販售中" : "已下架");
+    })
+})
+
+$(".edit-btn").on("click",function(){
+    let id=$(this).data("id");
+    location.href=`?do=edit_item&id=${id}`;
+})
+
+ </script>
