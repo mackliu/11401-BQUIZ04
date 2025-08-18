@@ -3,7 +3,7 @@
 <div class="ct">
     新增大分類
     <input type="text" name="big" id="big">
-    <button>新增</button>
+    <button onclick="addBig()">新增</button>
 </div>
 <!-- div.ct>select+input:text+button -->
  <div class="ct">
@@ -31,6 +31,14 @@
     </tr>
  </table>
 
+ <script>
+function addBig(){
+    let name=$("#big").val();
+    $.post("./api/save_type.php",{name,big_id:0},()=>{
+        
+    })
+}    
+ </script>
 
 <h2 class="ct">商品管理</h2>
 <div class="ct">
