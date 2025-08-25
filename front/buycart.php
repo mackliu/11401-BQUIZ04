@@ -70,7 +70,7 @@ if(isset($_SESSION['cart']) && count($_SESSION['cart'])>0){
 $(".del-btn").on("click",function(){
     let id=$(this).data("id");
     $.post("./api/delCart.php",{id},()=>{
-        location.reload();
+        location.href="?do=buycart";
     })
 })
 </script>
