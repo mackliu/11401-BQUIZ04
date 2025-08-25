@@ -51,13 +51,25 @@
            </marquee>
         <div id="left" class="ct">
         	<div style="min-height:400px;">
+                <a href="?type=0">全部商品( )</a>
                 <?php 
                 $bigs=$Type->all(['big_id'=>0]);
                 foreach($bigs as $big):
                 ?>
-                <a href="?type=<?=$big['id'];?>"><?=$big['name'];?></a>
-
+                <div class="ww">
+                <a href="?type=<?=$big['id'];?>"><?=$big['name'];?>( )</a>
                 <?php 
+                if($Type->count(['big_id'=>$big['id']])>0):
+                   $mids=$Type->all(['big_id'=>$big['id']]);
+                   echo "<div class='s'>";
+                   foreach($mids as $mid):
+                ?>
+                        <a  href="?type=<?=$mid['id'];?>"><?=$mid['name'];?>( )</a>
+                        <?php
+                   endforeach;
+                   echo "</div>";
+                endif;
+                echo "</div>";
                 endforeach;
                 ?>
         	</div>
