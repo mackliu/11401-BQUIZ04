@@ -130,3 +130,4 @@ $Admin=new DB('admin');
 $Type=new DB('type');
 $Bot=new DB("bot");
 $Item=new DB("item");
+$Order=new DB("orders");
