@@ -9,6 +9,6 @@ $Order->save($_POST);
 //清空購物車,檢定考試非必要.
 unset($_SESSION['cart']);
 
-to('../index.php');
+//to('../index.php');
 
 ?>
