@@ -1,5 +1,7 @@
 <?php include_once "db.php";
 
-if($_GET['chk']==$_SESSION['ans']){
+if(strtolower($_GET['chk']) == strtolower($_SESSION['ans'])){
     echo 1;
+}else{
+    echo 0;
 }

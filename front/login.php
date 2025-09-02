@@ -17,13 +17,7 @@
     <tr>
         <td class="tt ct">驗證碼</td>
         <td class="pp">
-            <?php
-            $a=rand(10,99);
-            $b=rand(10,99);
-            $_SESSION['ans']=$a+$b;
-            echo $a . " + ". $b . " = ";
-
-            ?>
+            <img src="api/captcha.php" id="captcha_img" alt="CAPTCHA" onclick="refreshCaptcha()">
             <input type="text" name="chk" id="chk">
         </td>
     </tr>
@@ -33,6 +27,10 @@
 </div>
 
 <script>
+function refreshCaptcha(){
+    $("#captcha_img").attr("src", "api/captcha.php?_="+Math.random());
+}
+
 function login(){
     let chk=$("#chk").val();
     $.get("./api/chkAns.php",{chk},(res)=>{

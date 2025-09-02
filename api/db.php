@@ -1,6 +1,8 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 date_default_timezone_set('Asia/Taipei');
-session_start();
 
 function dd($array){
     echo '<pre>';
@@ -8,17 +10,41 @@ function dd($array){
     echo '</pre>';
 }
 
-
 function q($sql){
     $dsn="mysql:host=localhost;charset=utf8;dbname=db11";
     $pdo=new PDO($dsn,'root','');
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
 function to($url){
     header("location:".$url);
 }
+
+function captcha(){
+    $str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    $code = '';
+    for ($i = 0; $i < 4; $i++) {
+        $code .= $str[rand(0, strlen($str) - 1)];
+    }
+    $_SESSION['ans'] = $code;
+    $im = imagecreatetruecolor(80, 30);
+    $white = imagecolorallocate($im, 255, 255, 255);
+    $black = imagecolorallocate($im, 0, 0, 0);
+    imagefill($im, 0, 0, $white);
+    imagestring($im, 5, 20, 5, $code, $black);
+    for ($i = 0; $i < 5; $i++) {
+        $color = imagecolorallocate($im, rand(0, 255), rand(0, 255), rand(0, 255));
+        imageline($im, rand(0, 80), rand(0, 30), rand(0, 80), rand(0, 30), $color);
+    }
+    for ($i = 0; $i < 100; $i++) {
+        $color = imagecolorallocate($im, rand(0, 255), rand(0, 255), rand(0, 255));
+        imagesetpixel($im, rand(0, 80), rand(0, 30), $color);
+    }
+    header("Content-type: image/png");
+    imagepng($im);
+    imagedestroy($im);
+}
+
 
 class DB{
 private $dsn="mysql:host=localhost;dbname=db11;charset=utf8";
