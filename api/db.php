@@ -21,25 +21,55 @@ function to($url){
 }
 
 function captcha(){
-    $str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    $str = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     $code = '';
     for ($i = 0; $i < 4; $i++) {
         $code .= $str[rand(0, strlen($str) - 1)];
     }
     $_SESSION['ans'] = $code;
-    $im = imagecreatetruecolor(80, 30);
+
+    $font = '../fonts/font.ttf';
+    $fontSize = 20;
+
+    // Increased image dimensions for safety
+    $width = 160;
+    $height = 50;
+    $im = imagecreatetruecolor($width, $height);
     $white = imagecolorallocate($im, 255, 255, 255);
     $black = imagecolorallocate($im, 0, 0, 0);
     imagefill($im, 0, 0, $white);
-    imagestring($im, 5, 20, 5, $code, $black);
+
+    // Starting position for the first character
+    $x = 15;
+
+    // Loop through each character
+    for ($i = 0; $i < strlen($code); $i++) {
+        $char = $code[$i];
+        $angle = rand(-15, 15); // Individual random angle
+
+        // Calculate bounding box for the character
+        $bbox = imagettfbbox($fontSize, $angle, $font, $char);
+
+        // Y position - adjust to keep characters vertically aligned near the center
+        $y = 35 + rand(-5, 5);
+
+        // Draw the character
+        imagettftext($im, $fontSize, $angle, $x, $y, $black, $font, $char);
+
+        // Update x position for the next character
+        $x += ($bbox[2] - $bbox[0]) + 5; // Add 5px spacing
+    }
+
+    // Keep the noise, adjusted for new dimensions
     for ($i = 0; $i < 5; $i++) {
         $color = imagecolorallocate($im, rand(0, 255), rand(0, 255), rand(0, 255));
-        imageline($im, rand(0, 80), rand(0, 30), rand(0, 80), rand(0, 30), $color);
+        imageline($im, rand(0, $width), rand(0, $height), rand(0, $width), rand(0, $height), $color);
     }
     for ($i = 0; $i < 100; $i++) {
         $color = imagecolorallocate($im, rand(0, 255), rand(0, 255), rand(0, 255));
-        imagesetpixel($im, rand(0, 80), rand(0, 30), $color);
+        imagesetpixel($im, rand(0, $width), rand(0, $height), $color);
     }
+
     header("Content-type: image/png");
     imagepng($im);
     imagedestroy($im);
