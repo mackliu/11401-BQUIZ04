@@ -19,7 +19,7 @@
                 <a href="?">回首頁</a> |
                 <a href="?do=news">最新消息</a> |
                 <a href="?do=look">購物流程</a> |
-                <a href="?do=buycart">購物車</a> |
+                <a href="?do=buycart">購物車(<span id='cart-count'></span>)</a> |
                 <?php 
                 if(isset($_SESSION['login'])){
                         echo "<a href='./api/logout.php'>";
@@ -96,4 +96,7 @@
         	<?=$Bot->find(1)['bottom'];?>       </div>
     </div>
 
+<script>
+getCartCount();
+</script>
 </body></html>
