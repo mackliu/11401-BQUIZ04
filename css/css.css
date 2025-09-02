@@ -10,7 +10,7 @@ body
 	padding:10px;
 	margin:20px auto 20px auto;
 	border:#000 solid 1px;
-	min-height:768px;
+	height:768px;
 }
 #top a
 {
@@ -22,7 +22,7 @@ body
 	display:inline-block;
 	width:20%;
 	padding:2%;
-	min-height:550px;
+	height:480px;
 	vertical-align:top;
 	border:#000 1px solid;
 }
@@ -44,8 +44,9 @@ body
 	display:inline-block;
 	width:72%;
 	padding:1%;
-	min-height:550px;
+	height:500px;
 	border:#000 1px solid;
+	overflow:auto;
 }
 #bottom
 {
