@@ -17,6 +17,9 @@
     <tr>
         <td class="tt ct">驗證碼</td>
         <td class="pp">
+            <div style="vertical-align:middle;display:flex;width:180px;height:55px;justify-content:center;align-items:center;background-color:white">
+                    <img src="" alt="" id="chapcha">
+                </div>
             <img src="api/captcha.php" id="captcha_img" alt="CAPTCHA" onclick="refreshCaptcha()">
             <input type="text" name="chk" id="chk">
         </td>
@@ -30,7 +33,12 @@
 function refreshCaptcha(){
     $("#captcha_img").attr("src", "api/captcha.php?_="+Math.random());
 }
-
+getChapcha();
+function getChapcha(){
+    $.get("./api/code.php",function(res){
+        $("#chapcha").attr("src",res)
+    })
+}
 function login(){
     let chk=$("#chk").val();
     $.get("./api/chkAns.php",{chk},(res)=>{
